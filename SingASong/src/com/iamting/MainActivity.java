@@ -167,6 +167,10 @@ public class MainActivity extends FragmentActivity implements
 													.setTextColor(getResources()
 															.getColor(
 																	R.color.lightseablue));
+											textViews[1]
+													.setTextColor(getResources()
+															.getColor(
+																	R.color.black));
 											MARK = 0;
 											String name = (String) ((TextView) view)
 													.getText();
@@ -209,6 +213,10 @@ public class MainActivity extends FragmentActivity implements
 													.setTextColor(getResources()
 															.getColor(
 																	R.color.lightseablue));
+											textViews[1]
+													.setTextColor(getResources()
+															.getColor(
+																	R.color.black));
 											MARK = 0;
 											musicPath = FileManager.MUSIC_DIR_PATH
 													+ "/"
@@ -274,6 +282,10 @@ public class MainActivity extends FragmentActivity implements
 													.setTextColor(getResources()
 															.getColor(
 																	R.color.lightseablue));
+											textViews[2]
+													.setTextColor(getResources()
+															.getColor(
+																	R.color.black));
 											MARK = 0;
 											musicPath = FileManager.RECORD_DIR_PATH
 													+ "/"
@@ -472,7 +484,7 @@ public class MainActivity extends FragmentActivity implements
 
 			@Override
 			public void run() {
-				while (MusicPlayer.mediaPlayer != null
+				while (MusicPlayer.mediaPlayer != null && mTimeList.size() > 0
 						&& MusicPlayer.mediaPlayer.isPlaying()) {
 					handler2.post(new Runnable() {
 

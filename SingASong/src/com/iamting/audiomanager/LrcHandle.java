@@ -19,35 +19,42 @@ public class LrcHandle {
 		if (path != null) {
 			mWords.clear();
 			File file = new File(path);
-			try {
-				FileInputStream fileInputStream = new FileInputStream(file);
-				InputStreamReader inputStreamReader = new InputStreamReader(
-						fileInputStream, "utf-8");
-				BufferedReader bufferedReader = new BufferedReader(
-						inputStreamReader);
-				String s = "";
-				while ((s = bufferedReader.readLine()) != null) {
-					addTimeToList(s);
-					if ((s.indexOf("[ar:") != -1) || (s.indexOf("[ti:") != -1)
-							|| (s.indexOf("[by:") != -1)) {
-						s = s.substring(s.indexOf(":") + 1, s.indexOf("]"));
-					} else {
-						String ss = s.substring(s.indexOf("["),
-								s.indexOf("]") + 1);
-						s = s.replace(ss, "");
+			if (file.exists()) {
+				try {
+					FileInputStream fileInputStream = new FileInputStream(file);
+					InputStreamReader inputStreamReader = new InputStreamReader(
+							fileInputStream, "utf-8");
+					BufferedReader bufferedReader = new BufferedReader(
+							inputStreamReader);
+					String s = "";
+					while ((s = bufferedReader.readLine()) != null) {
+						addTimeToList(s);
+						if ((s.indexOf("[ar:") != -1)
+								|| (s.indexOf("[ti:") != -1)
+								|| (s.indexOf("[by:") != -1)) {
+							s = s.substring(s.indexOf(":") + 1, s.indexOf("]"));
+						} else {
+							String ss = s.substring(s.indexOf("["),
+									s.indexOf("]") + 1);
+							s = s.replace(ss, "");
+						}
+						mWords.add(s);
 					}
-					mWords.add(s);
-				}
 
-				bufferedReader.close();
-				inputStreamReader.close();
-				fileInputStream.close();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-				mWords.add("没有歌词文件，赶紧去下载");
-			} catch (IOException e) {
-				e.printStackTrace();
-				mWords.add("没有读取到歌词");
+					bufferedReader.close();
+					inputStreamReader.close();
+					fileInputStream.close();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+					mWords.add("没有歌词文件，赶紧去下载");
+				} catch (IOException e) {
+					e.printStackTrace();
+					mWords.add("没有读取到歌词");
+				}
+			} else {
+				mWords.clear();
+				mWords.add("找不到歌词啊");
+				mWords.add("by Ting");
 			}
 		} else {
 			mWords.clear();
@@ -66,25 +73,24 @@ public class LrcHandle {
 	}
 
 	private static int timeHandler(String string) {
-	       string = string.replace(".", ":");
-	       String timeData[] = string.split(":");
-	        int minute = Integer.parseInt(timeData[0]);
-	        int second = Integer.parseInt(timeData[1]);
-	        int millisecond = Integer.parseInt(timeData[2]);
+		string = string.replace(".", ":");
+		String timeData[] = string.split(":");
+		int minute = Integer.parseInt(timeData[0]);
+		int second = Integer.parseInt(timeData[1]);
+		int millisecond = Integer.parseInt(timeData[2]);
 
-	        int currentTime = (minute * 60 + second) * 1000 + millisecond * 10;
+		int currentTime = (minute * 60 + second) * 1000 + millisecond * 10;
 
-	        return currentTime;
-	    }
+		return currentTime;
+	}
 
-	 private static void addTimeToList(String string) {
-	        Matcher matcher = Pattern.compile(
-	                "\\[\\d{1,2}:\\d{1,2}([\\.:]\\d{1,2})?\\]").matcher(string);
-	        if (matcher.find()) {
-	            String str = matcher.group();
-	            mTimeList.add(timeHandler(str.substring(1,
-	                    str.length() - 1)));
-	        }
+	private static void addTimeToList(String string) {
+		Matcher matcher = Pattern.compile(
+				"\\[\\d{1,2}:\\d{1,2}([\\.:]\\d{1,2})?\\]").matcher(string);
+		if (matcher.find()) {
+			String str = matcher.group();
+			mTimeList.add(timeHandler(str.substring(1, str.length() - 1)));
+		}
 
-	    }
+	}
 }
