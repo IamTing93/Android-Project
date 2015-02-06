@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.iamting.MainActivity" >
+
+    <include layout="@layout/tabheader"/>
+    
+    <fragment
+        android:id="@+id/fragLRC"
+        android:name="com.iamting.Fragments.FragmentLRC"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+    
+	<fragment
+        android:id="@+id/fragMusic"
+        android:name="com.iamting.Fragments.FragmentMUsic"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+	
+	<fragment
+        android:id="@+id/fragRecord"
+        android:name="com.iamting.Fragments.FragmentRecord"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>
