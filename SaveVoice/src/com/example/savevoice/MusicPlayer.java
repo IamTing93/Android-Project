@@ -45,6 +45,7 @@ public class MusicPlayer {
 				@Override
 				public void onCompletion(MediaPlayer mp) {
 					alertDialog.dismiss();
+					stopPlaying();
 				}
 			});
 		}

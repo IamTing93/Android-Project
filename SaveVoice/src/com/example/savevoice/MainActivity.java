@@ -25,6 +25,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener {
@@ -47,9 +48,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		@Override
 		public void handleMessage(Message msg) {
 			List<String> lists = (List<String>) msg.obj;
+			int len = lists.size();
 			adapter.clear();
-			for (String item : lists) {
-				String str = item.split("/")[item.split("/").length - 1]
+			for (int i = len - 1; i >= 0; i--) {
+				String str = lists.get(i).split("/")[lists.get(i).split("/").length - 1]
 						.split("\\.")[0];
 				adapter.add(str);
 				adapter.notifyDataSetChanged();
@@ -129,7 +131,7 @@ public class MainActivity extends Activity implements OnClickListener {
 										public void onClick(
 												DialogInterface dialog,
 												int which) {
-											String path = list.get(position);
+											String path = FileManager.DIR_PATH + "/" + ((TextView) view).getText() + ".3gp";
 											AlertDialog alertDialog = new AlertDialog.Builder(
 													MainActivity.this)
 													.setPositiveButton(
@@ -158,7 +160,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		lvShowRecord.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
+			public boolean onItemLongClick(AdapterView<?> parent, final View view,
 					int position, long id) {
 				final int posTmp = position;
 				if (!recorder.getIsBuild()) {
@@ -172,7 +174,7 @@ public class MainActivity extends Activity implements OnClickListener {
 										public void onClick(
 												DialogInterface dialog,
 												int which) {
-											String path = list.get(posTmp);
+											String path = FileManager.DIR_PATH + "/" + ((TextView) view).getText() + ".3gp";
 											fileManager.deleteFile(path);
 											list.remove(posTmp);
 											Message msg = new Message();
