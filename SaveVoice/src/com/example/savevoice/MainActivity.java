@@ -160,7 +160,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		lvShowRecord.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, final View view,
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				final int posTmp = position;
 				if (!recorder.getIsBuild()) {
@@ -174,9 +174,10 @@ public class MainActivity extends Activity implements OnClickListener {
 										public void onClick(
 												DialogInterface dialog,
 												int which) {
-											String path = FileManager.DIR_PATH + "/" + ((TextView) view).getText() + ".3gp";
+											String path = list.get(list.size() - 1 - posTmp);
+											Log.v("Delete File:", path);
 											fileManager.deleteFile(path);
-											list.remove(posTmp);
+											list.remove(list.size() - 1 - posTmp);
 											Message msg = new Message();
 											msg.obj = list;
 											handler.sendMessage(msg);
@@ -206,6 +207,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			
 			String path = getPath();
 			btnPlayAndStopButton.setText("停止录音");
+			btnPlayAndStopButton.setBackgroundResource(R.drawable.btn_style_stop);
 			recorder.startRecording(path);
 			list.add(path);
 			Message msg = new Message();
@@ -213,6 +215,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			handler.sendMessage(msg);
 		} else {
 			btnPlayAndStopButton.setText("开始录音");
+			btnPlayAndStopButton.setBackgroundResource(R.drawable.btn_style_start);
 			recorder.stopRecording();
 		}
 	}

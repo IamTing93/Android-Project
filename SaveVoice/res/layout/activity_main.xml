@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/btn_style"
+        android:background="@drawable/btn_style_start"
         android:text="开始录音"
         android:textSize="15dp" />
 
